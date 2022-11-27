@@ -634,9 +634,11 @@ class SciHub(object):
                 html = await res.text(encoding='utf-8')
                 s = self._get_soup(html)
                 frame = s.find('iframe') or s.find('embed')
+                # 提取到链接
                 if frame:
-                    return frame.get('src') if not frame.get('src').startswith('//') \
-                        else 'http:' + frame.get('src')
+                    # downLink=frame.get('src')
+                    return frame.get('src')+'+'+ identifier if not frame.get('src').startswith('//') \
+                        else 'http:' + frame.get('src').split('#')[0]+'+'+ identifier # 新增去除后面无用的部分
                 else:
                     logger.error("Error: 可能是 Scihub 上没有收录该文章, 请直接访问上述页面看是否正常。")
                     return html
@@ -647,7 +649,8 @@ class SciHub(object):
         """
         res = None
         try:
-            url = info.url
+            # url = info.url
+            url = info.split('+')[0]
             if url.startswith("/"):
                 url = self.base_url.strip("/") + info.url
             logger.info(f"获取 {url} 中...")
@@ -656,9 +659,13 @@ class SciHub(object):
         except Exception as e:
             logger.error(f"获取源文件出错: {e}，大概率是下载超时，请检查")
 
-        name = info.title
+        # name = info.title
+        name=os.path.basename(url)
+        print(info.split('+')[0])
+        
 
         if not res:
+            url = info.split('+')[0]
             return
 
         self._save(res,
