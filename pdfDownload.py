@@ -18,7 +18,7 @@ import random
 # 定义可以同时执行的函数数量
 threadPool = ThreadPoolExecutor(max_workers=5) 
 def down():
-    response = requests.get('https://zero.sci-hub.se/6510/1d5292d9ce85c525ad909da9f5040bec/huang2017.pdf')
+    response = requests.get('https://moscow.sci-hub.se/2110/aa796d5dc8520cff8ffd28564efa47c4/optimal-traffic-light-control-for-a-single-intersection.pdf#navpanes=0&view=FitH')
     bytes_io = io.BytesIO(response.content)  # 转换为字节流
     print("成功")
     with open('files/%s.pdf'%(str(random.randint(1,100000))), 'wb') as file:
@@ -28,8 +28,8 @@ def down():
 taskList=[]
 for i in range(1000):
     task=threadPool.submit(down)
-    taskList.append(task)
+    # taskList.append(task)
     print("添加一批任务")
-# time.sleep(60)
+time.sleep(60)
 # 等待所有完成
-wait(taskList, return_when=ALL_COMPLETED)
+# wait(taskList, return_when=ALL_COMPLETED)
