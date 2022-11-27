@@ -1,7 +1,7 @@
 import requests
 import io
 # 导入线程池
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor,wait,ALL_COMPLETED
 import queue
 # 重新封装线程池类
 class ThreadPoolExecutor(ThreadPoolExecutor):
@@ -24,5 +24,9 @@ def down():
         file.write(bytes_io.getvalue())  # 保存到本地
         print("保存成功")
 # down()
+taskList=[]
 for i in range(1000):
-    threadPool.submit(down)
+    task=threadPool.submit(down)
+    taskList.append(task)
+# 等待所有完成
+wait(taskList, return_when=ALL_COMPLETED)
