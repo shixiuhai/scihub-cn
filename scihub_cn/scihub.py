@@ -7,6 +7,7 @@ Sci-API Unofficial API
 @author zaytoun hulei6188
 @updated by Python实用宝典
 """
+import random
 import argparse
 import asyncio
 import hashlib

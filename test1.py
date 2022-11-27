@@ -1,3 +1,9 @@
+# 导入线程池
+from concurrent.futures import ThreadPoolExecutor
+# 创建一个5个线程的消费
+import time
+# 定义可以同时执行的函数数量
+threadPool = ThreadPoolExecutor(max_workers=5) 
 import requests
 
 cookies = {
@@ -22,6 +28,9 @@ headers = {
     'upgrade-insecure-requests': '1',
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
 }
-for i in range(1000):
+def aa():
     response = requests.get('https://sci-hub.se/10.1016/j.apsb.2021.06.014', cookies=cookies, headers=headers)
     print(response.text)
+
+for i in range(10000):
+    threadPool.submit(aa)

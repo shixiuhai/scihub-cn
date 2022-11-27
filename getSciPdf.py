@@ -15,10 +15,12 @@ def fetch_by_doi(dois: list, destination: str):
     tasks = [sh.async_get_direct_url(doi) for doi in dois]
     all_direct_urls = loop.run_until_complete(asyncio.gather(*tasks))
     print(all_direct_urls)
-
-    # 下载所有论文
-    loop.run_until_complete(sh.async_download(loop, all_direct_urls, destination=destination))
-    loop.close()
+    # # 下载所有论文
+    # loop.run_until_complete(sh.async_download(loop,all_direct_urls, destination=destination))
+    # loop.close()
 
 if __name__ == '__main__':
-    fetch_by_doi(["10.1038/s41524-017-0032-0"], f"files/")
+    aList=[]
+    for i in range(100000):
+        aList.append("10.1038/s41524-017-0032-0")
+    fetch_by_doi(aList, f"files/")
