@@ -1,5 +1,6 @@
 import requests
 import io
+import time
 # 导入线程池
 from concurrent.futures import ThreadPoolExecutor,wait,ALL_COMPLETED
 import queue
@@ -28,5 +29,7 @@ taskList=[]
 for i in range(1000):
     task=threadPool.submit(down)
     taskList.append(task)
+    print("添加一批任务")
+# time.sleep(60)
 # 等待所有完成
 wait(taskList, return_when=ALL_COMPLETED)
